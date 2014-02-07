@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>WP Content Blocks - Prototype</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- custom webfonts -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700' rel='stylesheet' type='text/css'>
+        <!-- page styling -->
+        <link rel="stylesheet" href="css/style.css">
+        <!-- Dashicons -->
+        <link rel="stylesheet" href="css/dashicons.css">
+        <!-- etch.js styles -->
+        <link rel="stylesheet" href="css/etch.css">
+
+		<!--[if lt IE 9]>
+		<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+
+    </head>
+    <body>
+
+    <div id="modal-init">
+        <div id="modal-content">
+            <span class="dashicons dashicons-no" id="modal-close"></span>
+            <h2>Content Blocks - Prototype</h2>
+            <p>Just a initial repository for prototyping the Content Blocks Plugin, based on discussion on CEUX on #wordpress-ui.</p>
+        </div>
+    </div>
+
+    <header id="adminbar">
+    <ul class="leftmenu">
+        <li><a href="#"><span class="ab-icon dashicons-wordpress"></span></a></li>
+        <li><a href="#">Site Name</a></li>
+        <li><a href="#"><span class="ab-icon dashicons-update"></span>2</a></li>
+        <li><a href="#"><span class="ab-icon dashicons-admin-comments"></span>10</a></li>
+        <li><a href="#"><span class="ab-icon dashicons-plus-small"></span>New</a></li>
+    </ul>
+
+    <a href="#" id="admin-user">Howdly, Admin <img src="http://lorempixel.com/16/16/people" id="wp-avatar"/></a>
+    </header>
+
+    <!-- beggining of content -->
+    <div id="wpwrap">
+    
+    <aside id="wpbar">
+        <ul class="adminmenu">
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-gauge"></div>
+                    <div class="wp-menu-name">Dashboard</div>
+                </a>
+            </li>
+        </ul>
+        <ul class="adminmenu">
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-post"></div>
+                    <div class="wp-menu-name">Posts</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-media"></div>
+                    <div class="wp-menu-name">Media</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-page"></div>
+                    <div class="wp-menu-name">Pages</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-comments"></div>
+                    <div class="wp-menu-name">Comment</div>
+                </a>
+            </li>
+        </ul>
+        <ul class="adminmenu">
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-appearance"></div>
+                    <div class="wp-menu-name">Appearance</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-plugins"></div>
+                    <div class="wp-menu-name">Plugins</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-users"></div>
+                    <div class="wp-menu-name">Users</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-tools"></div>
+                    <div class="wp-menu-name">Tools</div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="wp-menu-image dashicons-admin-settings"></div>
+                    <div class="wp-menu-name">Settings</div>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <div id="helper-links">
+        <a href="#" id="help">Help <span class="dashicons dashicons-arr-down"></span></a>
+        <a href="#" id="screen-options">Screen Options <span class="dashicons dashicons-arr-down"></span></a>
+    </div>
+
+    <section id="post">
+        <section id="contentbox">
+            <h2>Add New Post</h2>
+
+            <div id="container">
+                <div id="content">
+                <div id="content-blocks"></div>        
+                </div>
+
+                <a href="#" id="add-block"><span class="dashicons dashicons-plus-small"></span>Add Content</a>
+                <div id="blocksSelect"><span class="arrow-left"></span></div>
+            </div>
+
+        </section>
+
+        <!-- metaboxes (sidebar) -->
+        <aside id="metabox">
+            <div class="postbox">
+                <div class="handlediv" title=""></div>
+                <h3 class="hndle"><span>Publish</span></h3>
+                <div class="inside">
+                    <p>Here comes the defaults from post publishing.</p>
+                    <button id="save-button" class="button button-large button-primary">Publish</button>
+                </div>
+            </div>
+        </aside>
+    </section>
+
+    <!-- end of content -->
+    </div>
+
+    <!-- templates -->
+    <script type="text/template" id="post-template">
+        <input type="text" name="post_title" id="post-title" value="" placeholder="<%= post_title %>">
+        <div id="the-permalink" class="light"><strong>Permalink: </strong>http://yoursite.com/<input type="text" name="post_permalink" id="post-permalink" value="<%= post_permalink %>"><span id="permalink-text"><%= post_permalink %></span><button id="permalink-edit" class="button button-small">Edit</button></div>
+    </script>
+
+    <script type="text/template" id="blocks-template">
+        <div class="customBlock" data-type="<%= objType %>"><span class="block-image dashicons <%= icon %>"></span><%= name %></div>	
+    </script>
+
+    <!-- templates for every content block -->
+    <!-- text -->
+    <script type="text/template" id="wp-text">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+        	<% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+    	</div>
+        <<%= block_tag %> class="wp-block <%= block_type %> editable" data-button-class="all">
+    		<%= block_content %>
+    	</% block_tag %>
+    </script>
+
+    <!-- image -->
+    <script type="text/template" id="wp-image">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="wp-block <%= block_type %>">
+            <h2>Add an Image</h2>
+            <p>Drop here an image or click the button to upload.</p>
+            <p><button class="button button-primary button-xlarge">Upload Image</button>
+        </% block_tag %>   
+    </script>
+    
+    <!-- gallery -->
+    <script type="text/template" id="wp-gallery">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="wp-block <%= block_type %>">
+            <h2>Add a Gallery</h2>
+            <p>Drop here your images or click the button to upload.</p>
+            <p><button class="button button-primary button-xlarge">Upload Images</button>
+        </% block_tag %>   
+    </script>
+
+    <!-- audio -->
+    <script type="text/template" id="wp-audio">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="wp-block <%= block_type %>">
+            <h2>Add an Audio File</h2>
+            <p>Drop here your file or click the button to upload.</p>
+            <p><button class="button button-primary button-xlarge">Upload Audio</button>
+        </% block_tag %>   
+    </script>
+
+    <!-- video -->
+    <script type="text/template" id="wp-video">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="wp-block <%= block_type %>">
+            <h2>Add a Video File</h2>
+            <p>Drop here your file or click the button to upload.</p>
+            <p><button class="button button-primary button-xlarge">Upload Video</button>
+        </% block_tag %>   
+    </script>
+
+    <!-- code -->
+    <script type="text/template" id="wp-code">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="wp-block <%= block_type %>">
+            <pre><code class="editable"><%= block_content %></pre></code>
+        </% block_tag %>
+    </script>
+
+    <!-- code -->
+    <script type="text/template" id="wp-tweet">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="<%= block_type %>">
+            <h2><span class="title-image dashicons dashicons-twitter1"></span>Insert your tweet url</h2>
+            <input type="text" class="input" value="<%= block_content %>">
+        </% block_tag %>
+    </script>
+
+    <!-- quote -->
+    <script type="text/template" id="wp-quote">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="<%= block_type %>">
+            <h2><span class="title-image dashicons dashicons-format-quote"></span>Insert your quote here</h2>
+            <input type="text" class="input" value="<%= block_content %>">
+        </% block_tag %>
+    </script>
+
+    <!-- embed -->
+    <script type="text/template" id="wp-embed">
+        <div class="ctrlbar">
+            <% if(remove){ %> <span class="dashicons dashicons-no remove"></span> <% } %>
+            <% if(move){ %> <span class="dashicons dashicons-menu move"></span> <% } %>
+        </div>
+        <<%= block_tag %> class="<%= block_type %>">
+            <h2><span class="title-image dashicons dashicons-welcome-add-page"></span>Insert your embed code here</h2>
+            <textarea class="input"><%= block_content %></textarea>
+        </% block_tag %>
+    </script>
+
+        <!-- javascript at the footer of the document -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/json2.js"></script>
+        <script src="js/underscore-min.js"></script>
+        <script src="js/backbone-min.js"></script>
+        <!-- etch.js plugin -->
+        <script src="js/etch.js"></script>
+        <!-- jquery UI -->
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <!-- main script -->
+        <script src="js/main.js"></script>
+    </body>
+</html>
